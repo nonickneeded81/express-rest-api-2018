@@ -97,21 +97,16 @@ const index = async (req: $Request, res: $Response) => {
       return;
     }
 
-    response.responseJson(res, Object.assign(
-      {},
-      {
-        posts: posts.rows.map((post) => {
-          return {
-            id: post.id,
-            title: post.title,
-            body: post.body,
-            created_at: post.created_at,
-            updated_at: post.updated_at,
-          };
-        }),
-      },
-      response.createPaginationResponse(page, perPage, posts.count),
-    ));
+    response.responseJson(res, {
+      posts: posts.rows.map(post => ({
+        id: post.id,
+        title: post.title,
+        body: post.body,
+        created_at: post.created_at,
+        updated_at: post.updated_at,
+      })),
+      ...response.createPaginationResponse(page, perPage, posts.count),
+    });
   } catch (e) {
     response.responseInternalServerError(res, e);
   }

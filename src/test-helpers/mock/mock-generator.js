@@ -15,7 +15,7 @@ export type Modifier = Object | ModifierFunc;
 
 const modifierFunc = (mo: Modifier) => {
   if (typeof mo === 'function') return mo;
-  return (i, o) => Object.assign({}, o, (mo: Object));
+  return (i, o) => ({...o, ...(mo: Object)});
 };
 
 export const removePK = (i: number, o: Object) => {

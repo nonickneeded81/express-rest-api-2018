@@ -43,7 +43,7 @@ export class WhereBuilder {
     }
 
     if (isObject(this.query[name])) {
-      this.query[name] = Object.assign({}, this.query[name], query);
+      this.query[name] = {...this.query[name], ...query};
       return;
     }
 
@@ -54,7 +54,7 @@ export class WhereBuilder {
   }
 
   addQuery(query: any) {
-    this.query = Object.assign({}, this.query, query);
+    this.query = {...this.query, ...query};
   }
 
   removeQuery(name: string) {

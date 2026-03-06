@@ -7,15 +7,13 @@ config();
 
 let server: any; // https://github.com/facebook/flow/issues/1684
 
-const connectDB = () => {
-  return sequelize
-    .authenticate()
-    .then(() => {
-      console.log('DB connection has been established successfully.');
-    })
-    .catch((err) => {
-      console.error('Unable to connect to the database:', err);
-    });
+const connectDB = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log('DB connection has been established successfully.');
+  } catch (err) {
+    console.error('Unable to connect to the database:', err);
+  }
 };
 
 const startServer = async () => {

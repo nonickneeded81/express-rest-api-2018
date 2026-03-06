@@ -29,8 +29,8 @@ const responseBadRequest = (res: $Response, errors: Object = {}) => {
   invalidFormat(res, 400, 'Invalid parameters', errors);
 };
 
-const responseNotFound = (res: $Response, resourse: string = '', errors: Object = {}) => {
-  const r = resourse ? `${resourse} ` : '';
+const responseNotFound = (res: $Response, resource: string = '', errors: Object = {}) => {
+  const r = resource ? `${resource} ` : '';
   invalidFormat(res, 404, `${r}Not Found`, errors);
 };
 
