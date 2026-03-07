@@ -1,2 +1,1 @@
-// @flow
-export * from './query';
+export * from './query.js';
