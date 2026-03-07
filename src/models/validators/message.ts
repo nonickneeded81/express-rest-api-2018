@@ -1,5 +1,3 @@
-// @flow
-
 const len = (name: string, range: [number, number]) => {
   const msg = range[0] === range[1]
     ? `${name} should not be more than ${range[0]} characters in length.`
@@ -9,11 +7,13 @@ const len = (name: string, range: [number, number]) => {
     args: range,
   };
 };
+
 const notEmpty = (name: string) => {
   return {
     msg: `${name} is required.`,
   };
 };
+
 const isInt = (name: string) => {
   return {
     msg: `${name} must be numeric.`,

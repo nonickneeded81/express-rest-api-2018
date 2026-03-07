@@ -1,11 +1,11 @@
-// @flow
-import {config} from 'dotenv';
-import {sequelize} from './models';
-import {app} from './app';
+import http from 'http';
+import { sequelize } from './models';
+import { app } from './app';
 
-config();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
 
-let server: any; // https://github.com/facebook/flow/issues/1684
+let server: http.Server | undefined;
 
 const connectDB = () => {
   return sequelize
@@ -13,22 +13,23 @@ const connectDB = () => {
     .then(() => {
       console.log('DB connection has been established successfully.');
     })
-    .catch((err) => {
+    .catch((err: Error) => {
       console.error('Unable to connect to the database:', err);
     });
 };
 
 const startServer = async () => {
   await connectDB();
-  server = await app.listen(3000, () => {
+  server = app.listen(3000, () => {
     console.log('server started');
   });
   process.on('SIGTERM', () => {
-    server.close(() => {
-      console.log('server closed');
-      // process.exit doesn't wait for async processes
-      process.exit(0);
-    });
+    if (server) {
+      server.close(() => {
+        console.log('server closed');
+        process.exit(0);
+      });
+    }
 
     setTimeout(() => {
       console.error('forcefully shutting down');

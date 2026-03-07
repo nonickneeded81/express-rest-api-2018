@@ -1,8 +1,8 @@
-FROM ubuntu:16.04
+FROM ubuntu:22.04
 
-ARG NODE_VERSION=v8.9.4
-ARG NVM_VERSION=v0.33.8
-ARG YARN_VERSION=1.3.2
+ARG NODE_VERSION=v20.18.1
+ARG NVM_VERSION=v0.39.7
+ARG YARN_VERSION=1.22.22
 ENV TZ Asia/Tokyo
 ENV LANG=ja_JP.UTF-8
 
@@ -10,8 +10,8 @@ ENV LANG=ja_JP.UTF-8
 RUN apt-get update && \
     apt-get clean && \
     apt-get install -y --no-install-recommends build-essential \
-    libssl-dev make mysql-client libmysqld-dev vim-tiny \
-    curl openssl git ca-certificates wget python \
+    libssl-dev make mysql-client libmysqlclient-dev vim-tiny \
+    curl openssl git ca-certificates wget python3 \
     language-pack-ja-base language-pack-ja \
     imagemagick ghostscript poppler-utils && \
     rm -rf /var/lib/apt/lists/*
@@ -30,5 +30,5 @@ ENV PATH $NVM_DIR/versions/node/$NODE_VERSION/bin:$PATH
 RUN wget https://yarnpkg.com/downloads/${YARN_VERSION}/yarn_${YARN_VERSION}_all.deb && dpkg -i yarn_${YARN_VERSION}_all.deb
 
 WORKDIR /app
-ADD package.json yarn.lock .flowconfig /app/
+ADD package.json yarn.lock tsconfig.json /app/
 RUN yarn --pure-lockfile
