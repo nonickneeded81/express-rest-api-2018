@@ -1,16 +1,12 @@
 {
   "extends": "airbnb",
-  "parser": "babel-eslint",
-  "plugins": [
-    "flowtype"
-  ],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
   "env": {
     "node": true,
     "mocha": true
-  },
-  "globals": {
-    "Generator": true,
-    "$Keys": true
   },
   "rules": {
     "no-alert": 0,
@@ -21,7 +17,7 @@
     "import/no-duplicates": 1,
     "arrow-body-style": 0,
     "no-underscore-dangle": 0,
-    "global-require": 0,
+    "import/extensions": ["error", "ignorePackages"],
     "prefer-destructuring": [1, {
       "array": false,
       "object": true
