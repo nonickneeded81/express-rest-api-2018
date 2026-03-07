@@ -1,5 +1,4 @@
-// @flow
-import {checkSchema} from 'express-validator/check/index';
+import { checkSchema } from 'express-validator';
 
 const request = {
   title: {
@@ -18,7 +17,7 @@ const id = {
   id: {
     errorMessage: 'ID must be numeric.',
     isInt: true,
-    toInt: true,
+    toInt: true as const,
   },
 };
 
@@ -36,13 +35,13 @@ const index = checkSchema({
     errorMessage: 'Page must be numeric.',
     optional: true,
     isInt: true,
-    toInt: true,
+    toInt: true as const,
   },
   per_page: {
     errorMessage: 'Per-page must be numeric.',
     optional: true,
     isInt: true,
-    toInt: true,
+    toInt: true as const,
   },
   order_key: {
     errorMessage: 'Invalid Order-key.',

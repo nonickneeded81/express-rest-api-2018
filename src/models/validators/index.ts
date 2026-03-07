@@ -1,9 +1,16 @@
-// @flow
 import Message from './message';
+
+interface ValidateConfig {
+  [key: string]: {
+    msg: string;
+    args?: [number, number];
+  };
+}
 
 class ValidationGenerator {
   name: string;
-  config: Object;
+
+  config: ValidateConfig;
 
   constructor(name: string) {
     this.name = name;

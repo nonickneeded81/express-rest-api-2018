@@ -1,8 +1,7 @@
-// @flow
 import g from './mock-generator';
-import {db} from '../../models';
+import { db } from '../../models';
 
-const builder = (i: number = 0) => {
+const builder = (i = 0) => {
   return {
     id: i + 1,
     title: `TITLE${i}`,
