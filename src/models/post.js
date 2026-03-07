@@ -21,6 +21,7 @@ export default (sequelize, dataTypes) => {
         .config,
     },
   }, {
+    tableName: 'Posts',
     underscored: true,
   });
   Post.associate = () => {
