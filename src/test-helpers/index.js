@@ -1,4 +1,3 @@
-// @flow
 import {sequelize} from '../models';
 
 sequelize.options.logging = false;
