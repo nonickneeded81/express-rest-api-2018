@@ -68,7 +68,7 @@ const getErrorResponse = (error) => {
 const getParameterErrorResponse = (errors) => {
   const res = {};
   errors.forEach((e) => {
-    res[e.param] = e.msg;
+    res[e.path] = e.msg;
   });
   return res;
 };
