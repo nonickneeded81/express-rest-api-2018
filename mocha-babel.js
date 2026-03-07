@@ -1,3 +1,4 @@
 /* eslint-disable */
-require("babel-polyfill");
-require('babel-register');
+require("core-js/stable");
+require("regenerator-runtime/runtime");
+require("@babel/register");
