@@ -57,7 +57,7 @@ const multi = (
   modifier = {},
 ) => model
   .bulkCreate(range(_range).map((i) => buildArgs(builder, i, modifier)))
-  .then(() => model.all())
+  .then(() => model.findAll())
   .catch((err) => console.log(err));
 
 const exportSingleM = (builder, model) => (
@@ -65,7 +65,8 @@ const exportSingleM = (builder, model) => (
 );
 
 const exportMultiM = (builder, model) => (
-  (modifier, _range = 5) => multiM(builder, model, _range, modifier)
+  // eslint-disable-next-line default-param-last
+  (_range = 5, modifier) => multiM(builder, model, _range, modifier)
 );
 
 const exportSingle = (builder, model) => (
