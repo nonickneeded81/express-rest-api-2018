@@ -24,6 +24,7 @@ export default (sequelize: Sequelize, dataTypes: DataTypes) => {
     },
   }, {
     underscored: true,
+    tableName: 'Posts',
   });
   Post.associate = () => {
     // associations can be defined here
