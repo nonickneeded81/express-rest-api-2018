@@ -70,7 +70,7 @@ const getErrorResponse = (error: Object) => {
 const getParameterErrorResponse = (errors: Array<any>) => {
   const res = {};
   errors.forEach((e) => {
-    res[e.param] = e.msg;
+    res[e.path] = e.msg;
   });
   return res;
 };
