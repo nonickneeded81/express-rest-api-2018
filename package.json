@@ -6,9 +6,9 @@
   },
   "scripts": {
     "build": "babel src --out-dir dist/src --ignore spec.js && babel config --out-dir dist/config --copy-files",
-    "start:dev": "NODE_ENV=development && yarn db:migrate && nodemon --exec @babel/node src/index.js",
-    "start:stg": "NODE_ENV=staging && yarn build && yarn db:migrate && @babel/node dist/src/index.js",
-    "start:prod": "NODE_ENV=production && yarn build && yarn db:migrate && @babel/node dist/src/index.js",
+    "start:dev": "NODE_ENV=development && yarn db:migrate && nodemon --exec babel-node src/index.js",
+    "start:stg": "NODE_ENV=staging && yarn build && yarn db:migrate && babel-node dist/src/index.js",
+    "start:prod": "NODE_ENV=production && yarn build && yarn db:migrate && babel-node dist/src/index.js",
     "docker:build": "docker-compose build",
     "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
     "docker:stg": "docker-compose -f docker-compose.yml -f docker-compose.stg.yml up",
