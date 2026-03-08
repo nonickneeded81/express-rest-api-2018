@@ -1,5 +1,4 @@
-// @flow
-import posts from './posts';
+import posts from './posts.js';
 
 export default {
   posts,
