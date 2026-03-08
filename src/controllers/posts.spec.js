@@ -70,6 +70,17 @@ describe('Posts API', () => {
       ;
     });
 
+    it('returns 404 for non-existent post', async () => {
+      await request(app)
+        .put('/posts/999')
+        .send({title: 'title', body: 'body'})
+        .expect(404, {
+          message: 'Not Found',
+          errors: {},
+        })
+      ;
+    });
+
     describe('validation', () => {
       it('could check if it exists', async () => {
         await request(app)
@@ -110,6 +121,16 @@ describe('Posts API', () => {
             title: 'TITLE0',
             body: 'BODY0',
           });
+        })
+      ;
+    });
+
+    it('returns 404 for non-existent post', async () => {
+      await request(app)
+        .get('/posts/999')
+        .expect(404, {
+          message: 'Post Not Found',
+          errors: {},
         })
       ;
     });
@@ -179,6 +200,17 @@ describe('Posts API', () => {
         .then((r) => {
           const ids = r.body.posts.map((p) => p.id);
           assert.deepEqual(ids, [5, 4, 3, 2, 1]);
+        })
+      ;
+    });
+
+    it('returns 404 when no posts exist', async () => {
+      await cleanDatabase();
+      await request(app)
+        .get('/posts')
+        .expect(404, {
+          message: 'Posts Not Found',
+          errors: {},
         })
       ;
     });
