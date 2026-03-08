@@ -72,7 +72,7 @@ const multi = (
 ) =>
   model
     .bulkCreate(range(_range).map(i => buildArgs(builder, i, modifier)))
-    .then(() => model.all())
+    .then(() => model.findAll())
     .catch(err => console.log(err));
 
 const exportSingleM = (builder: Builder, model: Model) =>
