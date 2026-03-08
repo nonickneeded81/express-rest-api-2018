@@ -1,16 +1,16 @@
 // @flow
-import {checkSchema} from 'express-validator/check/index';
+import {checkSchema} from 'express-validator';
 
 const request = {
   title: {
     errorMessage: 'Title is required.',
-    exists: true,
-    isEmpty: false,
+    exists: { options: { values: 'falsy' } },
+    notEmpty: true,
   },
   body: {
     errorMessage: 'Body is required.',
-    exists: true,
-    isEmpty: false,
+    exists: { options: { values: 'falsy' } },
+    notEmpty: true,
   },
 };
 

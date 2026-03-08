@@ -1,6 +1,6 @@
 // @flow
 import type {$Response} from 'express';
-import {validationResult} from 'express-validator/check/index';
+import {validationResult} from 'express-validator';
 import {SEQUELIZE_UNIQUE_CONSTRAINT_ERROR, SEQUELIZE_VALIDATION_ERROR} from '../constants';
 
 const createPaginationResponse = (page: number, perPage: number, totalCount: number) => {
@@ -13,8 +13,8 @@ const createPaginationResponse = (page: number, perPage: number, totalCount: num
   }
   return {
     total_count: totalCount,
-    total_page: totalCount % perPage === 0 ?
-      totalCount / perPage : (Math.floor(totalCount / perPage)) + 1,
+    total_page: totalCount % perPage === 0
+      ? totalCount / perPage : (Math.floor(totalCount / perPage)) + 1,
     current_page: page,
   };
 };
@@ -70,15 +70,15 @@ const getErrorResponse = (error: Object) => {
 const getParameterErrorResponse = (errors: Array<any>) => {
   const res = {};
   errors.forEach((e) => {
-    res[e.param] = e.msg;
+    res[e.path] = e.msg;
   });
   return res;
 };
 
 const handleSequelizeError = (res: $Response, error: Object) => {
   if (
-    error.name === SEQUELIZE_VALIDATION_ERROR ||
-    error.name === SEQUELIZE_UNIQUE_CONSTRAINT_ERROR
+    error.name === SEQUELIZE_VALIDATION_ERROR
+    || error.name === SEQUELIZE_UNIQUE_CONSTRAINT_ERROR
   ) {
     responseBadRequest(
       res,

@@ -178,7 +178,7 @@ describe('Posts API', () => {
         .get('/posts?order=desc&order_key=title')
         .expect(200)
         .then((r) => {
-          const ids = r.body.posts.map(p => p.id);
+          const ids = r.body.posts.map((p) => p.id);
           assert.deepEqual(ids, [5, 4, 3, 2, 1]);
         })
       ;
