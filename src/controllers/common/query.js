@@ -13,7 +13,7 @@ export class WhereBuilder {
     this.query = {};
   }
 
-  equalQuery(name: any, q: any, modifier: (q: any) => any = o => o) {
+  equalQuery(name: any, q: any, modifier: (q: any) => any = (o) => o) {
     if (q == null) return;
     const query = modifier(q);
     this.pushQuery(name, query);
@@ -23,14 +23,14 @@ export class WhereBuilder {
     this.pushQuery(name, null);
   }
 
-  opQuery(name: any, op: Object, q: any, modifier: (q: any) => any = o => o) {
+  opQuery(name: any, op: Object, q: any, modifier: (q: any) => any = (o) => o) {
     if (q == null) return;
     const query: Object = {};
     query[op] = modifier(q);
     this.pushQuery(name, query);
   }
 
-  likeQuery(name: any, q: string, modifier: (q: any) => any = o => o) {
+  likeQuery(name: any, q: string, modifier: (q: any) => any = (o) => o) {
     if (q == null) return;
     const query = modifier(q);
     this.pushQuery(name, likeQuery(query));
@@ -43,7 +43,7 @@ export class WhereBuilder {
     }
 
     if (isObject(this.query[name])) {
-      this.query[name] = Object.assign({}, this.query[name], query);
+      this.query[name] = { ...this.query[name], ...query};
       return;
     }
 
@@ -54,7 +54,7 @@ export class WhereBuilder {
   }
 
   addQuery(query: any) {
-    this.query = Object.assign({}, this.query, query);
+    this.query = { ...this.query, ...query};
   }
 
   removeQuery(name: string) {

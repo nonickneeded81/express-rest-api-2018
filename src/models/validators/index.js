@@ -3,6 +3,7 @@ import Message from './message';
 
 class ValidationGenerator {
   name: string;
+
   config: Object;
 
   constructor(name: string) {

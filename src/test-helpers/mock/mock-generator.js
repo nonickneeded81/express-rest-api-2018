@@ -4,7 +4,7 @@ import {range} from 'lodash';
 type Model = {
   build(o: Object): Object;
   bulkCreate(os: Array<Object>): Object;
-  all(): Object;
+  findAll(): Object;
 };
 
 type Builder = (i: number) => Object;
@@ -15,7 +15,7 @@ export type Modifier = Object | ModifierFunc;
 
 const modifierFunc = (mo: Modifier) => {
   if (typeof mo === 'function') return mo;
-  return (i, o) => Object.assign({}, o, (mo: Object));
+  return (i, o) => ({ ...o, ...(mo: Object)});
 };
 
 export const removePK = (i: number, o: Object) => {
@@ -52,40 +52,42 @@ const multiM = (
   model: Model,
   _range: number = 5,
   modifier: Modifier = {},
-) => range(_range).map(i => singleM(builder, model, i, modifier));
+) => range(_range).map((i) => singleM(builder, model, i, modifier));
 
 const single = (
   builder: Builder,
   model: Model,
   i: number,
   modifier: Modifier = {},
-) =>
-  singleM(builder, model, i, modifier)
-    .save()
-    .catch(err => console.log(err));
+) => singleM(builder, model, i, modifier)
+  .save()
+  .catch((err) => console.log(err));
 
 const multi = (
   builder: Builder,
   model: Model,
   _range: number = 5,
   modifier: Modifier = {},
-) =>
-  model
-    .bulkCreate(range(_range).map(i => buildArgs(builder, i, modifier)))
-    .then(() => model.all())
-    .catch(err => console.log(err));
+) => model
+  .bulkCreate(range(_range).map((i) => buildArgs(builder, i, modifier)))
+  .then(() => model.findAll())
+  .catch((err) => console.log(err));
 
-const exportSingleM = (builder: Builder, model: Model) =>
-  (i: number = 0, modifier: Modifier = {}) => singleM(builder, model, i, modifier);
+const exportSingleM = (builder: Builder, model: Model) => (
+  (i: number = 0, modifier: Modifier = {}) => singleM(builder, model, i, modifier)
+);
 
-const exportMultiM = (builder: Builder, model: Model) =>
-  (_range: number = 5, modifier: Modifier) => multiM(builder, model, _range, modifier);
+const exportMultiM = (builder: Builder, model: Model) => (
+  (modifier: Modifier, _range: number = 5) => multiM(builder, model, _range, modifier)
+);
 
-const exportSingle = (builder: Builder, model: Model) =>
-  (i: number = 0, modifier: Modifier = {}) => single(builder, model, i, modifier);
+const exportSingle = (builder: Builder, model: Model) => (
+  (i: number = 0, modifier: Modifier = {}) => single(builder, model, i, modifier)
+);
 
-const exportMulti = (builder: Builder, model: Model) =>
-  (_range: number = 5, modifier: Modifier = {}) => multi(builder, model, _range, modifier);
+const exportMulti = (builder: Builder, model: Model) => (
+  (_range: number = 5, modifier: Modifier = {}) => multi(builder, model, _range, modifier)
+);
 
 const exportAll = (builder: Builder, model: Model) => {
   return {
