@@ -1,11 +1,10 @@
-// @flow
 import {omit} from 'lodash';
 import request from 'supertest';
 import assert from 'assert';
-import {db} from '../models';
-import {cleanDatabase} from '../test-helpers';
-import mock from '../test-helpers/mock';
-import {app} from '../app';
+import {db} from '../models/index.js';
+import {cleanDatabase} from '../test-helpers/index.js';
+import mock from '../test-helpers/mock/index.js';
+import {app} from '../app.js';
 
 describe('Posts API', () => {
   beforeEach(async () => {
@@ -21,7 +20,7 @@ describe('Posts API', () => {
           id: 1,
         })
         .then(async () => {
-          const post = await db.Post.find();
+          const post = await db.Post.findOne();
           assert.equal(post.title, 'title');
           assert.equal(post.body, 'body');
         })
@@ -64,9 +63,20 @@ describe('Posts API', () => {
         .send({title: 'title', body: 'body'})
         .expect(200)
         .then(async () => {
-          const post = await db.Post.findById(1);
+          const post = await db.Post.findByPk(1);
           assert.equal(post.title, 'title');
           assert.equal(post.body, 'body');
+        })
+      ;
+    });
+
+    it('returns 404 for non-existent post', async () => {
+      await request(app)
+        .put('/posts/999')
+        .send({title: 'title', body: 'body'})
+        .expect(404, {
+          message: 'Not Found',
+          errors: {},
         })
       ;
     });
@@ -111,6 +121,16 @@ describe('Posts API', () => {
             title: 'TITLE0',
             body: 'BODY0',
           });
+        })
+      ;
+    });
+
+    it('returns 404 for non-existent post', async () => {
+      await request(app)
+        .get('/posts/999')
+        .expect(404, {
+          message: 'Post Not Found',
+          errors: {},
         })
       ;
     });
@@ -178,8 +198,19 @@ describe('Posts API', () => {
         .get('/posts?order=desc&order_key=title')
         .expect(200)
         .then((r) => {
-          const ids = r.body.posts.map(p => p.id);
+          const ids = r.body.posts.map((p) => p.id);
           assert.deepEqual(ids, [5, 4, 3, 2, 1]);
+        })
+      ;
+    });
+
+    it('returns 404 when no posts exist', async () => {
+      await cleanDatabase();
+      await request(app)
+        .get('/posts')
+        .expect(404, {
+          message: 'Posts Not Found',
+          errors: {},
         })
       ;
     });
