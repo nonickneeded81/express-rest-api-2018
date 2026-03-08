@@ -1,14 +1,15 @@
 // @flow
 import Sequelize from 'sequelize';
 import config from '../../config/db';
+import postModel from './post';
 
 const env = process.env.NODE_ENV || 'development';
 
-export const sequelize =
-  new Sequelize(config[env].database, config[env].username, config[env].password, config[env]);
+const { database, username, password } = config[env];
+export const sequelize = new Sequelize(database, username, password, config[env]);
 
 export const db = {
-  Post: sequelize.import('./post'),
+  Post: postModel(sequelize, Sequelize.DataTypes),
 };
 
 // associate models
