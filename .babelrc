@@ -1,4 +1,9 @@
 {
-  "presets": ["flow", "latest"],
-  "plugins": ["transform-class-properties", "transform-object-rest-spread"]
+  "presets": [
+    ["@babel/preset-env", { "targets": { "node": "22" } }]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-class-properties",
+    "@babel/plugin-transform-object-rest-spread"
+  ]
 }

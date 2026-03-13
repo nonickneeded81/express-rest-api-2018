@@ -1,4 +1,3 @@
-// @flow
 import _response from './response';
 import _query from './query';
 
