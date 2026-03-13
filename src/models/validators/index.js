@@ -1,11 +1,7 @@
-// @flow
-import Message from './message';
+import Message from './message.js';
 
 class ValidationGenerator {
-  name: string;
-  config: Object;
-
-  constructor(name: string) {
+  constructor(name) {
     this.name = name;
     this.config = {};
   }
@@ -15,7 +11,7 @@ class ValidationGenerator {
     return this;
   }
 
-  len(range: [number, number]) {
+  len(range) {
     this.config.len = Message.len(this.name, range);
     return this;
   }
@@ -26,6 +22,6 @@ class ValidationGenerator {
   }
 }
 
-export const createByName = (name: string) => {
+export const createByName = (name) => {
   return new ValidationGenerator(name);
 };
