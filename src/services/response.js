@@ -1,6 +1,6 @@
 // @flow
 import type {$Response} from 'express';
-import {validationResult} from 'express-validator/check/index';
+import {validationResult} from 'express-validator';
 import {SEQUELIZE_UNIQUE_CONSTRAINT_ERROR, SEQUELIZE_VALIDATION_ERROR} from '../constants';
 
 const createPaginationResponse = (page: number, perPage: number, totalCount: number) => {
@@ -70,7 +70,7 @@ const getErrorResponse = (error: Object) => {
 const getParameterErrorResponse = (errors: Array<any>) => {
   const res = {};
   errors.forEach((e) => {
-    res[e.param] = e.msg;
+    res[e.path] = e.msg;
   });
   return res;
 };

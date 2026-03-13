@@ -1,6 +1,6 @@
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
-ARG NODE_VERSION=v12.22.12
+ARG NODE_VERSION=v18.20.4
 ARG NVM_VERSION=v0.39.7
 ARG YARN_VERSION=1.22.22
 ENV TZ Asia/Tokyo
@@ -10,8 +10,8 @@ ENV LANG=ja_JP.UTF-8
 RUN apt-get update && \
     apt-get clean && \
     apt-get install -y --no-install-recommends build-essential \
-    libssl-dev make mysql-client libmysqld-dev vim-tiny \
-    curl openssl git ca-certificates wget python \
+        libssl-dev make default-mysql-client libmysqlclient-dev vim-tiny \
+        curl openssl git ca-certificates wget python3 \
     language-pack-ja-base language-pack-ja \
     imagemagick ghostscript poppler-utils && \
     rm -rf /var/lib/apt/lists/*
