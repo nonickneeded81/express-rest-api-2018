@@ -42,5 +42,8 @@
     "mysql2": "^2.3.3",
     "sequelize": "^6.37.5",
     "sequelize-cli": "^6.6.2"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }
