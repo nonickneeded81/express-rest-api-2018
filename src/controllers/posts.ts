@@ -14,7 +14,7 @@ const create = async (req: Request, res: Response) => {
       body: body.body,
     });
 
-    response.responseCreated(res, post.id);
+    response.responseCreated(res, (post as any).id);
   } catch (e: any) {
     if (response.handleSequelizeError(res, e)) {
       return;
@@ -53,7 +53,7 @@ const detail = async (req: Request, res: Response) => {
       return;
     }
 
-    const post = await db.Post.findByPk(req.params.id);
+    const post = await db.Post.findByPk(req.params.id as string);
 
     if (!post) {
       response.responseNotFound(res, 'Post');
@@ -61,9 +61,9 @@ const detail = async (req: Request, res: Response) => {
     }
 
     response.responseJson(res, {
-      id: post.id,
-      title: post.title,
-      body: post.body,
+      id: (post as any).id,
+      title: (post as any).title,
+      body: (post as any).body,
       created_at: (post as any).created_at,
       updated_at: (post as any).updated_at,
     });
@@ -88,7 +88,7 @@ const index = async (req: Request, res: Response) => {
       where: postsWhere.generateQuery(),
       offset,
       limit,
-      order: query.createOrderQuery(req),
+      order: query.createOrderQuery(req) as any,
     });
 
     if (posts.rows.length === 0) {
@@ -98,9 +98,9 @@ const index = async (req: Request, res: Response) => {
 
     response.responseJson(res, {
       posts: posts.rows.map(post => ({
-        id: post.id,
-        title: post.title,
-        body: post.body,
+        id: (post as any).id,
+        title: (post as any).title,
+        body: (post as any).body,
         created_at: (post as any).created_at,
         updated_at: (post as any).updated_at,
       })),

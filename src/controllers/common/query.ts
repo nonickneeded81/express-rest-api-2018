@@ -1,7 +1,7 @@
 import { Op } from 'sequelize';
 import { isObject, isEmpty } from 'lodash';
 
-export const likeQuery = (str: string) => {
+export const likeQuery = (str: string): Record<symbol, string> => {
   return { [Op.like]: `%${str}%` };
 };
 

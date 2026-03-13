@@ -1,6 +1,6 @@
 import { sequelize } from '../models';
 
-sequelize.options.logging = false;
+(sequelize as any).options.logging = false;
 
 export const cleanDatabase = async () => {
   const DATABASE_NAME_TEST = 'Tables_in_express_rest_api_2018_test';
