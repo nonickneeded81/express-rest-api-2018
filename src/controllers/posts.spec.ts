@@ -1,11 +1,10 @@
-// @flow
-import {omit} from 'lodash';
+import { omit } from 'lodash';
 import request from 'supertest';
 import assert from 'assert';
-import {db} from '../models';
-import {cleanDatabase} from '../test-helpers';
+import { db } from '../models';
+import { cleanDatabase } from '../test-helpers';
 import mock from '../test-helpers/mock';
-import {app} from '../app';
+import { app } from '../app';
 
 describe('Posts API', () => {
   beforeEach(async () => {
@@ -21,7 +20,7 @@ describe('Posts API', () => {
           id: 1,
         })
         .then(async () => {
-          const post = await db.Post.find();
+          const post: any = await db.Post.findOne();
           assert.equal(post.title, 'title');
           assert.equal(post.body, 'body');
         })
@@ -64,7 +63,7 @@ describe('Posts API', () => {
         .send({title: 'title', body: 'body'})
         .expect(200)
         .then(async () => {
-          const post = await db.Post.findById(1);
+          const post: any = await db.Post.findByPk(1);
           assert.equal(post.title, 'title');
           assert.equal(post.body, 'body');
         })
@@ -178,7 +177,7 @@ describe('Posts API', () => {
         .get('/posts?order=desc&order_key=title')
         .expect(200)
         .then((r) => {
-          const ids = r.body.posts.map(p => p.id);
+          const ids = r.body.posts.map((p: any) => p.id);
           assert.deepEqual(ids, [5, 4, 3, 2, 1]);
         })
       ;

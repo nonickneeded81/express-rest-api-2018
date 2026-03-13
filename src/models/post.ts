@@ -1,8 +1,7 @@
-// @flow
-import type Sequelize, {DataTypes} from 'sequelize';
-import {createByName as Name} from './validators/';
+import { Sequelize, DataTypes as DataTypesType } from 'sequelize';
+import { createByName as Name } from './validators/';
 
-export default (sequelize: Sequelize, dataTypes: DataTypes) => {
+export default (sequelize: Sequelize, dataTypes: typeof DataTypesType) => {
   const Post = sequelize.define('Post', {
     title: {
       type: dataTypes.STRING,
@@ -25,8 +24,5 @@ export default (sequelize: Sequelize, dataTypes: DataTypes) => {
   }, {
     underscored: true,
   });
-  Post.associate = () => {
-    // associations can be defined here
-  };
   return Post;
 };

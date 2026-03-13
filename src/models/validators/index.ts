@@ -1,9 +1,8 @@
-// @flow
 import Message from './message';
 
 class ValidationGenerator {
   name: string;
-  config: Object;
+  config: Record<string, any>;
 
   constructor(name: string) {
     this.name = name;

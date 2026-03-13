@@ -1,5 +1,4 @@
-// @flow
-import {checkSchema} from 'express-validator/check/index';
+import { checkSchema } from 'express-validator';
 
 const request = {
   title: {

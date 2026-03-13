@@ -1,24 +1,23 @@
-// @flow
-import {range} from 'lodash';
+import { range } from 'lodash';
 
-type Model = {
-  build(o: Object): Object;
-  bulkCreate(os: Array<Object>): Object;
-  all(): Object;
-};
+interface Model {
+  build(o: Record<string, any>): any;
+  bulkCreate(os: Array<Record<string, any>>): Promise<any>;
+  findAll(): Promise<any>;
+}
 
-type Builder = (i: number) => Object;
+type Builder = (i: number) => Record<string, any>;
 
-export type ModifierFunc = (i: number, o: Object) => Object;
+export type ModifierFunc = (i: number, o: Record<string, any>) => Record<string, any>;
 
-export type Modifier = Object | ModifierFunc;
+export type Modifier = Record<string, any> | ModifierFunc;
 
 const modifierFunc = (mo: Modifier) => {
-  if (typeof mo === 'function') return mo;
-  return (i, o) => Object.assign({}, o, (mo: Object));
+  if (typeof mo === 'function') return mo as ModifierFunc;
+  return (_i: number, o: Record<string, any>) => ({ ...o, ...mo });
 };
 
-export const removePK = (i: number, o: Object) => {
+export const removePK = (_i: number, o: Record<string, any>) => {
   if (o.id === undefined) { return o; }
   const ret = o;
   delete ret.id;
@@ -28,12 +27,12 @@ export const removePK = (i: number, o: Object) => {
 export const mergeModifier = (m1: Modifier, m2: Modifier) => {
   const f1 = modifierFunc(m1);
   const f2 = modifierFunc(m2);
-  return (i: number, o: Object) => {
+  return (i: number, o: Record<string, any>) => {
     return f2(i, f1(i, o));
   };
 };
 
-const buildArgs = (builder: Builder, i:number, modifier: Modifier) => {
+const buildArgs = (builder: Builder, i: number, modifier: Modifier) => {
   const f = modifierFunc(modifier);
   return f(i, builder(i));
 };
@@ -62,7 +61,7 @@ const single = (
 ) =>
   singleM(builder, model, i, modifier)
     .save()
-    .catch(err => console.log(err));
+    .catch((err: any) => console.log(err));
 
 const multi = (
   builder: Builder,
@@ -72,14 +71,14 @@ const multi = (
 ) =>
   model
     .bulkCreate(range(_range).map(i => buildArgs(builder, i, modifier)))
-    .then(() => model.all())
-    .catch(err => console.log(err));
+    .then(() => model.findAll())
+    .catch((err: any) => console.log(err));
 
 const exportSingleM = (builder: Builder, model: Model) =>
   (i: number = 0, modifier: Modifier = {}) => singleM(builder, model, i, modifier);
 
 const exportMultiM = (builder: Builder, model: Model) =>
-  (_range: number = 5, modifier: Modifier) => multiM(builder, model, _range, modifier);
+  (_range: number = 5, modifier: Modifier = {}) => multiM(builder, model, _range, modifier);
 
 const exportSingle = (builder: Builder, model: Model) =>
   (i: number = 0, modifier: Modifier = {}) => single(builder, model, i, modifier);
