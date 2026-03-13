@@ -13,5 +13,5 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-ADD package.json /app/
-RUN npm install
+ADD package.json package-lock.json /app/
+RUN npm ci
