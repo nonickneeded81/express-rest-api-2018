@@ -54,7 +54,7 @@ const detail = async (req: $Request, res: $Response) => {
       return;
     }
 
-    const post = await db.Post.findById(req.params.id);
+    const post = await db.Post.findByPk(req.params.id);
 
     if (!post) {
       response.responseNotFound(res, 'Post');
