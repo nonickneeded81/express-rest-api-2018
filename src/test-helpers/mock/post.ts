@@ -1,6 +1,5 @@
-// @flow
 import g from './mock-generator';
-import {db} from '../../models';
+import { db } from '../../models';
 
 const builder = (i: number = 0) => {
   return {
@@ -10,4 +9,4 @@ const builder = (i: number = 0) => {
   };
 };
 
-export default g.exportAll(builder, db.Post);
+export default g.exportAll(builder, db.Post as any);

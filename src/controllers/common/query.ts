@@ -1,13 +1,12 @@
-// @flow
-import Sequelize from 'sequelize';
-import {isObject, isEmpty} from 'lodash';
+import { Op } from 'sequelize';
+import { isObject, isEmpty } from 'lodash';
 
 export const likeQuery = (str: string) => {
-  return {[(Sequelize.Op.like: any)]: `%${str}%`};
+  return { [Op.like]: `%${str}%` };
 };
 
 export class WhereBuilder {
-  query: Object;
+  query: Record<string, any>;
 
   constructor() {
     this.query = {};
@@ -23,9 +22,9 @@ export class WhereBuilder {
     this.pushQuery(name, null);
   }
 
-  opQuery(name: any, op: Object, q: any, modifier: (q: any) => any = o => o) {
+  opQuery(name: any, op: any, q: any, modifier: (q: any) => any = o => o) {
     if (q == null) return;
-    const query: Object = {};
+    const query: Record<string, any> = {};
     query[op] = modifier(q);
     this.pushQuery(name, query);
   }
@@ -43,7 +42,7 @@ export class WhereBuilder {
     }
 
     if (isObject(this.query[name])) {
-      this.query[name] = {...this.query[name], ...query};
+      this.query[name] = { ...this.query[name], ...query };
       return;
     }
 
@@ -54,7 +53,7 @@ export class WhereBuilder {
   }
 
   addQuery(query: any) {
-    this.query = {...this.query, ...query};
+    this.query = { ...this.query, ...query };
   }
 
   removeQuery(name: string) {

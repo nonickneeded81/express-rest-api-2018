@@ -1,11 +1,10 @@
-// @flow
-import {omit} from 'lodash';
+import { omit } from 'lodash';
 import request from 'supertest';
 import assert from 'assert';
-import {db} from '../models';
-import {cleanDatabase} from '../test-helpers';
+import { db } from '../models';
+import { cleanDatabase } from '../test-helpers';
 import mock from '../test-helpers/mock';
-import {app} from '../app';
+import { app } from '../app';
 
 describe('Posts API', () => {
   beforeEach(async () => {

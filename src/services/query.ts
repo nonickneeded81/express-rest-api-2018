@@ -1,5 +1,6 @@
-// @flow
-const createPaginationQuery = (req: Object) => {
+import { Request } from 'express';
+
+const createPaginationQuery = (req: Request) => {
   const DEFAULT_PAGE = 1;
   const DEFAULT_PER_PAGE = 20;
   const page = req.query.page ? Number(req.query.page) : DEFAULT_PAGE;
@@ -13,7 +14,6 @@ const createPaginationQuery = (req: Object) => {
 };
 
 const addUniqueColumnToFinalOrderKey = (orderKeys: Array<Array<any>>) => {
-  // for not unique column
   if (!orderKeys.some((key) => { return key[0] === 'id'; })) orderKeys.push(['id', 'desc']);
   return orderKeys;
 };
@@ -28,7 +28,7 @@ const createOrderQueryByParam = (orderKey: string, order: string) => {
 };
 
 const createOrderQueryForAssociation = (
-  model: Object | Array<Object>,
+  model: any | Array<any>,
   orderKey: string,
   order: string,
 ) => {
@@ -37,8 +37,9 @@ const createOrderQueryForAssociation = (
   return addUniqueColumnToFinalOrderKey(query);
 };
 
-const createOrderQuery = (req: Object) => {
-  return createOrderQueryByParam(req.query.order_key, req.query.order);
+const createOrderQuery = (req: Request) => {
+  const q = req.query as any;
+  return createOrderQueryByParam(q.order_key, q.order);
 };
 
 export default {

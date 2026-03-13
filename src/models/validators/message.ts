@@ -1,5 +1,3 @@
-// @flow
-
 const len = (name: string, range: [number, number]) => {
   const msg = range[0] === range[1]
     ? `${name} should not be more than ${range[0]} characters in length.`

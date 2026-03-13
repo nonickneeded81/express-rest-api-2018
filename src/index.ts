@@ -1,11 +1,10 @@
-// @flow
-import {config} from 'dotenv';
-import {sequelize} from './models';
-import {app} from './app';
+import { config } from 'dotenv';
+import { sequelize } from './models';
+import { app } from './app';
 
 config();
 
-let server: any; // https://github.com/facebook/flow/issues/1684
+let server: any;
 
 const connectDB = async () => {
   try {

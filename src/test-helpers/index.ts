@@ -1,14 +1,13 @@
-// @flow
-import {sequelize} from '../models';
+import { sequelize } from '../models';
 
 sequelize.options.logging = false;
 
 export const cleanDatabase = async () => {
   const DATABASE_NAME_TEST = 'Tables_in_express_rest_api_2018_test';
-  const data = await sequelize.query('SHOW TABLES');
+  const data: any = await sequelize.query('SHOW TABLES');
   const tableNames = data[0];
   await sequelize.query('SET FOREIGN_KEY_CHECKS = 0');
-  const promises = tableNames.map((tableName) => {
+  const promises = tableNames.map((tableName: any) => {
     const name = tableName[DATABASE_NAME_TEST];
     if (name === 'SequelizeMeta') {
       return true;

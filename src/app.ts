@@ -1,6 +1,4 @@
-// @flow
-import type {NextFunction, $Request, $Response} from 'express';
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import morgan from 'morgan';
 import router from './router';
 
@@ -13,7 +11,7 @@ if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('combined'));
 }
 
-app.use((req: $Request, res: $Response, next: NextFunction) => {
+app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   next();
 });

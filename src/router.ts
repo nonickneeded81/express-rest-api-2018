@@ -1,7 +1,6 @@
-// @flow
 import express from 'express';
 import C from './controllers';
-import {parameterValidator as V} from './middlewares';
+import { parameterValidator as V } from './middlewares';
 
 const router = express.Router();
 
