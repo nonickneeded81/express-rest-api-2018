@@ -65,7 +65,7 @@ const exportSingleM = (builder, model) => (
 );
 
 const exportMultiM = (builder, model) => (
-  (modifier, _range = 5) => multiM(builder, model, _range, modifier)
+  (_range = 5, modifier = {}) => multiM(builder, model, _range, modifier)
 );
 
 const exportSingle = (builder, model) => (
