@@ -1,3 +1,3 @@
 #!/bin/sh
-yarn
-yarn start:dev
+npm install
+npm run start:dev
