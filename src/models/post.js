@@ -1,4 +1,4 @@
-import {createByName as Name} from './validators/';
+import {createByName as Name} from './validators';
 
 export default (sequelize, dataTypes) => {
   const Post = sequelize.define('Post', {

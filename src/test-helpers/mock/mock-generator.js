@@ -2,7 +2,7 @@ import {range} from 'lodash';
 
 const modifierFunc = (mo) => {
   if (typeof mo === 'function') return mo;
-  return (i, o) => Object.assign({}, o, mo);
+  return (i, o) => ({ ...o, ...mo});
 };
 
 export const removePK = (i, o) => {
@@ -39,40 +39,44 @@ const multiM = (
   model,
   _range = 5,
   modifier = {},
-) => range(_range).map(i => singleM(builder, model, i, modifier));
+) => range(_range).map((i) => singleM(builder, model, i, modifier));
 
 const single = (
   builder,
   model,
   i,
   modifier = {},
-) =>
-  singleM(builder, model, i, modifier)
-    .save()
-    .catch(err => console.log(err));
+) => singleM(builder, model, i, modifier)
+  .save()
+  .catch((err) => console.log(err));
 
 const multi = (
   builder,
   model,
   _range = 5,
   modifier = {},
-) =>
-  model
-    .bulkCreate(range(_range).map(i => buildArgs(builder, i, modifier)))
-    .then(() => model.all())
-    .catch(err => console.log(err));
+) => model
+  .bulkCreate(range(_range).map(
+    (i) => buildArgs(builder, i, modifier),
+  ))
+  .then(() => model.findAll())
+  .catch((err) => console.log(err));
 
-const exportSingleM = (builder, model) =>
-  (i = 0, modifier = {}) => singleM(builder, model, i, modifier);
+const exportSingleM = (builder, model) => (
+  (i = 0, modifier = {}) => singleM(builder, model, i, modifier)
+);
 
-const exportMultiM = (builder, model) =>
-  (_range = 5, modifier) => multiM(builder, model, _range, modifier);
+const exportMultiM = (builder, model) => (
+  (modifier, _range = 5) => multiM(builder, model, _range, modifier)
+);
 
-const exportSingle = (builder, model) =>
-  (i = 0, modifier = {}) => single(builder, model, i, modifier);
+const exportSingle = (builder, model) => (
+  (i = 0, modifier = {}) => single(builder, model, i, modifier)
+);
 
-const exportMulti = (builder, model) =>
-  (_range = 5, modifier = {}) => multi(builder, model, _range, modifier);
+const exportMulti = (builder, model) => (
+  (_range = 5, modifier = {}) => multi(builder, model, _range, modifier)
+);
 
 const exportAll = (builder, model) => {
   return {

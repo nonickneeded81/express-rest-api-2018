@@ -32,7 +32,7 @@ const createOrderQueryForAssociation = (
   order,
 ) => {
   const models = Array.isArray(model) ? model : [model];
-  const query = createOrderQueryByParam(orderKey, order).map(q => models.concat(q));
+  const query = createOrderQueryByParam(orderKey, order).map((q) => models.concat(q));
   return addUniqueColumnToFinalOrderKey(query);
 };
 

@@ -11,8 +11,8 @@ const createPaginationResponse = (page, perPage, totalCount) => {
   }
   return {
     total_count: totalCount,
-    total_page: totalCount % perPage === 0 ?
-      totalCount / perPage : (Math.floor(totalCount / perPage)) + 1,
+    total_page: totalCount % perPage === 0
+      ? totalCount / perPage : (Math.floor(totalCount / perPage)) + 1,
     current_page: page,
   };
 };
@@ -75,8 +75,8 @@ const getParameterErrorResponse = (errors) => {
 
 const handleSequelizeError = (res, error) => {
   if (
-    error.name === SEQUELIZE_VALIDATION_ERROR ||
-    error.name === SEQUELIZE_UNIQUE_CONSTRAINT_ERROR
+    error.name === SEQUELIZE_VALIDATION_ERROR
+    || error.name === SEQUELIZE_UNIQUE_CONSTRAINT_ERROR
   ) {
     responseBadRequest(
       res,
