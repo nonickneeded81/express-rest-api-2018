@@ -1,16 +1,14 @@
 // @flow
-import {checkSchema} from 'express-validator/check/index';
+import {checkSchema} from 'express-validator';
 
 const request = {
   title: {
     errorMessage: 'Title is required.',
-    exists: true,
-    isEmpty: false,
+    notEmpty: true,
   },
   body: {
     errorMessage: 'Body is required.',
-    exists: true,
-    isEmpty: false,
+    notEmpty: true,
   },
 };
 
@@ -18,7 +16,6 @@ const id = {
   id: {
     errorMessage: 'ID must be numeric.',
     isInt: true,
-    toInt: true,
   },
 };
 
