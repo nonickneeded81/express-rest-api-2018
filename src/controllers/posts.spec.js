@@ -1,4 +1,3 @@
-// @flow
 import {omit} from 'lodash';
 import request from 'supertest';
 import assert from 'assert';
@@ -64,7 +63,7 @@ describe('Posts API', () => {
         .send({title: 'title', body: 'body'})
         .expect(200)
         .then(async () => {
-          const post = await db.Post.findById(1);
+          const post = await db.Post.findByPk(1);
           assert.equal(post.title, 'title');
           assert.equal(post.body, 'body');
         })

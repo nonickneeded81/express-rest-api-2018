@@ -1,4 +1,3 @@
-// @flow
 import express from 'express';
 import C from './controllers';
 import {parameterValidator as V} from './middlewares';
