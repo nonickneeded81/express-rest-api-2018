@@ -1,6 +1,6 @@
 // @flow
 import type {$Response} from 'express';
-import {validationResult} from 'express-validator/check/index';
+import {validationResult} from 'express-validator';
 import {SEQUELIZE_UNIQUE_CONSTRAINT_ERROR, SEQUELIZE_VALIDATION_ERROR} from '../constants';
 
 const createPaginationResponse = (page: number, perPage: number, totalCount: number) => {
