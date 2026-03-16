@@ -1,14 +1,15 @@
-// @flow
 import Sequelize from 'sequelize';
 import config from '../../config/db';
+import PostModel from './post';
 
 const env = process.env.NODE_ENV || 'development';
 
-export const sequelize =
-  new Sequelize(config[env].database, config[env].username, config[env].password, config[env]);
+const dbConf = config[env];
+// eslint-disable-next-line max-len
+export const sequelize = new Sequelize(dbConf.database, dbConf.username, dbConf.password, dbConf);
 
 export const db = {
-  Post: sequelize.import('./post'),
+  Post: PostModel(sequelize, Sequelize.DataTypes),
 };
 
 // associate models

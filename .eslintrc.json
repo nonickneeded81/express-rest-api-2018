@@ -1,16 +1,9 @@
 {
-  "extends": "airbnb",
-  "parser": "babel-eslint",
-  "plugins": [
-    "flowtype"
-  ],
+  "extends": "airbnb-base",
+  "parser": "@babel/eslint-parser",
   "env": {
     "node": true,
     "mocha": true
-  },
-  "globals": {
-    "Generator": true,
-    "$Keys": true
   },
   "rules": {
     "no-alert": 0,

@@ -1,5 +1,4 @@
-// @flow
-const createPaginationQuery = (req: Object) => {
+const createPaginationQuery = (req) => {
   const DEFAULT_PAGE = 1;
   const DEFAULT_PER_PAGE = 20;
   const page = req.query.page ? Number(req.query.page) : DEFAULT_PAGE;
@@ -12,13 +11,13 @@ const createPaginationQuery = (req: Object) => {
   };
 };
 
-const addUniqueColumnToFinalOrderKey = (orderKeys: Array<Array<any>>) => {
+const addUniqueColumnToFinalOrderKey = (orderKeys) => {
   // for not unique column
   if (!orderKeys.some((key) => { return key[0] === 'id'; })) orderKeys.push(['id', 'desc']);
   return orderKeys;
 };
 
-const createOrderQueryByParam = (orderKey: string, order: string) => {
+const createOrderQueryByParam = (orderKey, order) => {
   const DEFAULT_ORDER_KEY = 'id';
   const DEFAULT_ORDER = 'desc';
   return addUniqueColumnToFinalOrderKey([[
@@ -28,16 +27,16 @@ const createOrderQueryByParam = (orderKey: string, order: string) => {
 };
 
 const createOrderQueryForAssociation = (
-  model: Object | Array<Object>,
-  orderKey: string,
-  order: string,
+  model,
+  orderKey,
+  order,
 ) => {
   const models = Array.isArray(model) ? model : [model];
-  const query = createOrderQueryByParam(orderKey, order).map(q => models.concat(q));
+  const query = createOrderQueryByParam(orderKey, order).map((q) => models.concat(q));
   return addUniqueColumnToFinalOrderKey(query);
 };
 
-const createOrderQuery = (req: Object) => {
+const createOrderQuery = (req) => {
   return createOrderQueryByParam(req.query.order_key, req.query.order);
 };
 
