@@ -1,3 +1,2 @@
 /* eslint-disable */
-require("babel-polyfill");
-require('babel-register');
+require('@babel/register');
