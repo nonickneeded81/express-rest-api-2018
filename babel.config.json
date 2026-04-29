@@ -1,0 +1,10 @@
+{
+  "presets": [
+    ["@babel/preset-env", { "targets": { "node": "12" } }],
+    "@babel/preset-flow"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-class-properties",
+    "@babel/plugin-proposal-object-rest-spread"
+  ]
+}
