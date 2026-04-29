@@ -1,6 +1,6 @@
 // @flow
 import type Sequelize, {DataTypes} from 'sequelize';
-import {createByName as Name} from './validators/';
+import {createByName as Name} from './validators';
 
 export default (sequelize: Sequelize, dataTypes: DataTypes) => {
   const Post = sequelize.define('Post', {

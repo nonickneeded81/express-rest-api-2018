@@ -2,7 +2,7 @@
 import type { $Request, $Response } from 'express';
 import {response, query} from '../services';
 import {db} from '../models';
-import {createWhereBuilder} from './common/';
+import {createWhereBuilder} from './common';
 
 const create = async (req: $Request, res: $Response) => {
   try {
@@ -54,7 +54,7 @@ const detail = async (req: $Request, res: $Response) => {
       return;
     }
 
-    const post = await db.Post.findById(req.params.id);
+    const post = await db.Post.findByPk(req.params.id);
 
     if (!post) {
       response.responseNotFound(res, 'Post');
